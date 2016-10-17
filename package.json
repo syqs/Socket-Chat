@@ -1,14 +1,16 @@
 {
-  "name": "MyApp",
+  "name": "myApp",
   "version": "1.0.0",
   "main": "server/index.js",
-  "description": "A rapid project starter for Node, Express and Angular.",
+  "description": "the chat app",
   "engines": {
     "node": ">=0.10.0"
   },
   "dependencies": {
     "express": "^4.13.1",
-    "body-parser": "^1.14.1"
+    "body-parser": "^1.14.1",
+    "socket.io": ">= 0.9.6",
+    "mongoose": "latest"
   },
   "devDependencies": {
     "chai": "^3.4.0",
@@ -17,14 +19,10 @@
     "supertest": "^1.1.0",
     "supertest-as-promised": "^2.0.2"
   },
-  "author": "Dan <dan.corman@gmail.com>",
+  "author": "Kristian Magda <kristian.magda@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start": "./node_modules/.bin/nodemon server/index.js --ignore client/ --ignore node_modules/",
     "test": "./test/run.sh"
-  },
-  "bugs": {
-    "url": "https://github.com/dyale/node-catapult-angular/issues"
-  },
-  "homepage": "https://github.com/dyale/node-catapult-angular/"
+  }
 }

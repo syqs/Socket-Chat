@@ -14,7 +14,8 @@ describe("The Server", function() {
       .get('/api/tags-example')
       .expect(200)
       .expect(function(response) {
-        expect(response.body).to.include('node')
+        console.log("response: ", response.body)
+        expect(response.body).to.include('node', 'angular')
       })
   })
 })

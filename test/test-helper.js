@@ -12,22 +12,15 @@ global.__client = __dirname + '/../client'
 // Assertions
 //
 var chai = require('chai')
-// Option 1: Make the `expect` function available in every test file
+// Make the `expect` and `should` functions available in every test file
 global.expect = chai.expect
-// Option 2: Make everything should-able
-// chai.should()
+global.should = chai.should()
 
-
-//
-// Helper Functions
-//
-// This is the object you can attach any helper functions used across
-// several test files.
+// Helper Functions:
+// Attach any helper functions used across several test files.
 global.TestHelper = {}
 
-//
 // Mock apps for API testing
-//
 var express = require('express')
 
 TestHelper.createApp = function (loader) {

@@ -1,5 +1,12 @@
 <div class='jumbotron'>
   <h1>{{welcome}}</h1>
   <a class='btn' ui-sref='about'>{{buttonText}}</a>
+  <div>
+  	<p ng-repeat='message in messages' ng-class='{alert: message.user == "chatroom"}'>{{message.user}}: {{message.text}}</p>
+  	<form ng-submit='sendMessage()'>
+  	<input type="input" name="" ng-model='message'/>
+  	<button type="subimt" value="Send"/>
+  	</form>
+  </div>
 </div>
 <div ui-view></div>
