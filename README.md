@@ -1,2 +1,2 @@
-# Attaq Online chat component
+# Angular chat component utilizing Socket.io
 
