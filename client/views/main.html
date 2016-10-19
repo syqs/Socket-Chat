@@ -14,7 +14,7 @@
 			<p ng-repeat='user in users'> <button class="friendBtn" ng-click="addTab(user)">{{user}}</button></p>
 		</md-tab-body>
 	</md-tab>
-	<md-tab ng-repeat="tab in tabs track by $index" ng-init="test()" >
+	<md-tab ng-repeat="tab in rooms track by $index" ng-init="test()" >
 		<!-- use ng init to run a fn -->
 		<md-tab-label >
 		<span class="elTabo" ng-click="joinRoom(tab.title)">{{tab.title}}</span>

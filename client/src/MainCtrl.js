@@ -69,7 +69,7 @@ angular.module('myApp')
 			$scope.message2 = {};
 		};
 
-		// data object for tracking state of tabs
+		// data object for tracking state of rooms
 		$scope.data = {
 			selectedIndex: 0,
 			secondLocked: true,
@@ -84,11 +84,11 @@ angular.module('myApp')
 		};
 
 		// Rooms
-		var tabs = [{	title: 'General' }];
+		var rooms = [{	title: 'General' }];
 		var selected = null;
 		var previous = null;
 		// var currentRoom = '';
-		$scope.tabs = tabs;
+		$scope.rooms = rooms;
 		$scope.data.selectedIndex = 1;
 
 		$scope.joinRoom = function(room) {
@@ -99,19 +99,19 @@ angular.module('myApp')
 		$scope.addTab = function(title, view) {
 			socket.emit('room', title)
 			view = view || title + " Content View";
-			tabs.push({
+			rooms.push({
 				title: title,
 				content: view,
 				disabled: false
 			});
-			$scope.data.selectedIndex = tabs.length ;
+			$scope.data.selectedIndex = rooms.length ;
 		};
 
 		// remove room/tab
 		$scope.removeTab = function(tab) {
 			socket.emit('leaveRoom', tab)
-			var index = tabs.indexOf(tab);
-			tabs.splice(index, 1);
+			var index = rooms.indexOf(tab);
+			rooms.splice(index, 1);
 		};
 
 	}]);
