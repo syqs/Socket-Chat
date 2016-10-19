@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myApp')
-	.controller('MainCtrl', ['$scope', 'socket', function($scope, socket) {
+	.controller('MainCtrl', ['$scope', 'socket', function($scope, socket, Users) {
 
 		$scope.welcome = 'Chat with friends';
 		var room = 'General';
@@ -93,6 +93,11 @@ angular.module('myApp')
 
 		$scope.joinRoom = function(room) {
 			socket.emit('room', room)
+			Users.getFriends().then(function(friends){
+				console.log("these are the friends: ", friends)
+			}).catch(function(err){
+				console.log("error happened on client: ", err)
+			});
 		}
 
 		// Add a room/tab

@@ -4,7 +4,6 @@ mongoose.Promise = require( 'bluebird' );
 if(!process.env.URI){
   var uri = 'mongodb://localhost/myapp';
 } else {
-	//<dbpassword>@ds061676.mlab.com:61676/heroku_fv1cjwd9
   var uri = process.env.URI;
 }
 
@@ -35,9 +34,4 @@ process.on('SIGINT', function(){
 })
 
 // SCHEMAS
-var usersSchema = new mongoose.Schema({
-  nickname: String,
-  friends: Array
-}, { timestamps: true });
-
-var Users = mongoose.model('Users', usersSchema);
+require('./Users');

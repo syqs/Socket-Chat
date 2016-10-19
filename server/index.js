@@ -3,14 +3,22 @@ var Path = require('path');
 var routes = express.Router();
 var socket = require('../client/src/socket.js');
 var http = require('http');
-var db = require('../client/src/models/db.js');
+var db = require('./models/db.js');
 
 var assetFolder = Path.resolve(__dirname, '../client/');
 routes.use(express.static(assetFolder));
 
 // Example endpoint (also tested in test/server/index_test.js)
-routes.get('/api/tags-example', function(req, res) {
-  res.send(['node', 'express', 'angular'])
+routes.get('/api/friends', function(req, res) {
+  var user = req.name;
+  console.log("api friends queried with: ", req)
+  Users.find({name: user}, function(err, userData){
+    if (err) {
+      console.error(err.message);
+      res.status(404).send({error: err.message});
+    }
+    res.status(200).send(userData);
+  });
 });
 
 // We're in development or production mode;
