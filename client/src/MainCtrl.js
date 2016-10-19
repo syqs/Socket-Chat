@@ -4,7 +4,9 @@ angular.module('myApp')
 	.controller('MainCtrl', ['$scope', 'socket', function($scope, socket) {
 
 		$scope.welcome = 'Chat with friends';
-		var room = 'general';
+		var room = 'General';
+		$scope.message2 = {};
+		$scope.all = {};
 
 		// Socket listeners
 		socket.on('init', function(data) {
@@ -20,7 +22,8 @@ angular.module('myApp')
 		// Got message
 		socket.on('send:message', function(message) {
 			console.log("message recieved ", message)
-			$scope.messages.push(message);
+			$scope.all[message.room] = $scope.all[message.room] || [];
+			$scope.all[message.room].push(message);
 		});
 
 		// User joined
@@ -48,50 +51,19 @@ angular.module('myApp')
 			}
 		});
 
-		// Methods published to the scope
-		$scope.messages = [];
-
-		// $scope.sendMessage = function() {
-		// 	console.log("nessage2 ", $scope.message)
-		// 	socket.emit('send:message', {
-		// 		message: $scope.message
-		// 	});
-
-		// 	// add the message to our model locally
-		// 	$scope.messages.push({
-		// 		user: $scope.name,
-		// 		text: $scope.message
-		// 	});
-
-		// 	// clear message box
-		// 	$scope.message = '';
-		// };
-		$scope.test = function (argument) {
-			console.log("le test")
-		}
-
-		$scope.message2 = {};
-		$scope.all = {};
-
-		$scope.sendMessage2 = function(roomName) {
-			$scope.all[roomName] = [];
-			console.log("nessage2 ", $scope.message2[roomName])
-			console.log("nessage23 ", socket)
-
+		$scope.sendMessage = function(roomName) {
+			$scope.all[roomName] = $scope.all[roomName] || [];
+			
 			socket.emit('send:message', {
 				message: $scope.message2[roomName],
 				room: roomName
 			});
 
 			// add the message to our model locally
-			$scope.messages.push({
+			$scope.all[roomName].push({
 				user: $scope.name,
 				text: $scope.message2[roomName]
 			});
-			// $scope.all[roomName].push({
-			// 	user: $scope.name,
-			// 	text: $scope.message2[roomName]
-			// });
 
 			// clear message box
 			$scope.message2 = {};
@@ -114,13 +86,13 @@ angular.module('myApp')
 		var tabs = [{	title: 'General' }];
 		var selected = null;
 		var previous = null;
-		var currentRoom = '';
+		// var currentRoom = '';
 		$scope.tabs = tabs;
 		$scope.data.selectedIndex = 1;
 
 		$scope.joinRoom = function(room) {
-			socket.emit('leaveRoom', currentRoom)
-			currentRoom = room;
+			// socket.emit('leaveRoom', currentRoom)
+			// currentRoom = room;
 			socket.emit('room', room)
 		}
 

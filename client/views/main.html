@@ -24,10 +24,10 @@
 		</md-tab-label>
 	<md-tab-body>
 	<div id="chatBox" scroll-glue>
-		<p ng-repeat='message in messages' ng-class='{alert: message.user == "chatroom"}'>{{message.user}}: {{message.text}}</p>
+		<p ng-repeat='message in all[tab.title]' ng-class='{alert: message.user == "chatroom"}'>{{message.user}}: {{message.text}}</p>
 	</div>
 	<div class="chatControls">
-		<form id="bottom" ng-submit='sendMessage2(tab.title)'>
+		<form id="bottom" ng-submit='sendMessage(tab.title)'>
 			<input class="msg-input" type="input" name="msg2" ng-model='message2[tab.title]'/>
 			<button class="sendMsgBtn" type="subimt" value="Send">Send</button>
 		</form>

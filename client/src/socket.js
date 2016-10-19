@@ -75,10 +75,11 @@ module.exports = function (socket) {
 
   // broadcast a user's message to other users
   socket.on('send:message', function (data) {
-    console.log("this is data", data)
+    console.log("this is data.room", data.room)
     socket.broadcast.to(data.room).emit('send:message', {
       user: name,
-      text: data.message
+      text: data.message,
+      room: data.room
     });
   });
 
