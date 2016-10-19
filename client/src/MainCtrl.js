@@ -28,7 +28,7 @@ angular.module('myApp')
 
 		// User joined
 		socket.on('user:join', function(data) {
-			$scope.messages.push({
+			$scope.all.General.push({
 				user: 'General',
 				text: data.name + ' is now online.'
 			});
@@ -37,7 +37,7 @@ angular.module('myApp')
 
 		// add a message to the conversation when a user disconnects
 		socket.on('user:left', function(data) {
-			$scope.messages.push({
+			$scope.all.General.push({
 				user: 'General',
 				text: data.name + ' has disconnected.'
 			});
@@ -69,6 +69,7 @@ angular.module('myApp')
 			$scope.message2 = {};
 		};
 
+		// data object for tracking state of tabs
 		$scope.data = {
 			selectedIndex: 0,
 			secondLocked: true,
@@ -91,11 +92,10 @@ angular.module('myApp')
 		$scope.data.selectedIndex = 1;
 
 		$scope.joinRoom = function(room) {
-			// socket.emit('leaveRoom', currentRoom)
-			// currentRoom = room;
 			socket.emit('room', room)
 		}
 
+		// Add a room/tab
 		$scope.addTab = function(title, view) {
 			socket.emit('room', title)
 			view = view || title + " Content View";
@@ -107,6 +107,7 @@ angular.module('myApp')
 			$scope.data.selectedIndex = tabs.length ;
 		};
 
+		// remove room/tab
 		$scope.removeTab = function(tab) {
 			socket.emit('leaveRoom', tab)
 			var index = tabs.indexOf(tab);
