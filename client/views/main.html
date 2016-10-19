@@ -1,12 +1,53 @@
 <div class='jumbotron'>
-  <h1>{{welcome}}</h1>
-  <a class='btn' ui-sref='about'>{{buttonText}}</a>
-  <div>
-  	<p ng-repeat='message in messages' ng-class='{alert: message.user == "chatroom"}'>{{message.user}}: {{message.text}}</p>
-  	<form ng-submit='sendMessage()'>
-  	<input type="input" name="" ng-model='message'/>
-  	<button type="subimt" value="Send"/>
-  	</form>
-  </div>
+	<h1>{{welcome}}</h1>
+</div>
+<div>
+	<md-content class="md-padding">
+	<md-tabs class="md-accent" md-selected="data.selectedIndex" md-align-tabs="bottom">
+	<md-tab id="tab3">
+
+		<md-tab-label>
+		<span>
+			<md-icon md-svg-icon="person" style="color:white; z-index: 200"></md-icon>
+		</span>Friends list</md-tab-label>
+		<md-tab-body>
+			<p ng-repeat='user in users'> <button class="friendBtn" ng-click="addTab(user)">{{user}}</button></p>
+		</md-tab-body>
+	</md-tab>
+	<md-tab ng-repeat="tab in tabs track by $index" ng-init="test()" >
+		<!-- use ng init to run a fn -->
+		<md-tab-label >
+		<span class="elTabo" ng-click="joinRoom(tab.title)">{{tab.title}}</span>
+		<md-button ng-click="removeTab( tab )" class="close" aria-label="close" >
+		<ng-md-icon size="10" icon="close">X</ng-md-icon>
+		</md-button>
+		</md-tab-label>
+	<md-tab-body>
+	<div id="chatBox" scroll-glue>
+		<p ng-repeat='message in messages' ng-class='{alert: message.user == "chatroom"}'>{{message.user}}: {{message.text}}</p>
+	</div>
+	<div class="chatControls">
+		<form id="bottom" ng-submit='sendMessage2(tab.title)'>
+			<input class="msg-input" type="input" name="msg2" ng-model='message2[tab.title]'/>
+			<button class="sendMsgBtn" type="subimt" value="Send">Send</button>
+		</form>
+	</div>
+	</md-tab-body>
+	</md-tab>
+	</md-tabs>
+	</md-content>
+	<form ng-submit="addTab(tTitle,tContent)" layout="column" class="md-padding" style="padding-top: 0;">
+		<div layout="row" layout-sm="column">
+			<md-input-container>
+			<label for="label">Label</label>
+			<input type="text" id="label" ng-model="tTitle">
+			</md-input-container>
+			<md-button class="add-tab md-primary md-raised" ng-disabled="!tTitle" type="submit" style="margin-right: 0;">Add Room</md-button>
+		</div>
+	</form>
+</div>
+</div>
+<div>
+
 </div>
 <div ui-view></div>

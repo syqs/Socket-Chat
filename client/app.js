@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('myApp', [
-    'ui.router'
+    'ui.router',
+    'ngMaterial',
+    'luegg.directives'
   ])
 
     .config(function($stateProvider, $urlRouterProvider) {
@@ -14,11 +16,5 @@ angular.module('myApp', [
             templateUrl: 'views/main.html',
             controller: 'MainCtrl'
         })
-
-        .state('about', {
-          url: '/about',
-          templateUrl: 'views/about.html',
-          controller: 'AboutCtrl'
-        });
         
 });

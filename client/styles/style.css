@@ -1,0 +1,96 @@
+body {
+  font-size: 12px;
+  background: #3f3f3f;
+}
+
+h1{
+	color: #1c1c1c;
+	font-family: sans-serif;
+}
+
+.btn {
+  background: #639FDE;
+  border-radius: 28px;
+  font-family: sans-serif;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn:hover{
+  background-color: #2380E2;
+}
+
+.md-padding{
+  height: 500px;
+}
+
+.md-padding{
+  background: transparent;
+
+}
+button.close{
+  min-height: 10px;
+  min-width: 10px;
+  line-height: 5px;
+  padding: 2px 2px 2px 2px;
+  margin-top: -20px;
+  border: 1px solid #fff;
+  font-size:7px;
+}
+
+md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
+  min-height: 420px;
+}
+.jumbotron{
+	background-color: #dcdcdc;
+	text-align: center;
+	border-radius: 2px;
+}
+
+#chatBox {
+  overflow : auto;
+  width : 200px;
+  height : 347px;
+  padding: 10px 10px 10px 10px;
+  min-width: 200px;
+  max-width: 100%;
+  background: #ffffff;
+}
+
+.chatMessage {
+  padding: 2px 40px;
+  background: #ffffff;
+  border-radius: 25px;
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+md-tabs.md-default-theme.md-accent > md-tabs-wrapper, md-tabs.md-accent > md-tabs-wrapper {
+  background-color: #7d7d7d;
+}
+
+md-tabs.md-default-theme.md-accent > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]), md-tabs.md-accent > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]) {
+  color: #343232;
+}
+
+.friendBtn {
+  padding: 5px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+}
+
+.sendMsgBtn {
+  background: #232323;
+  opacity: 0.9;
+  border: 1px solid #cecece;
+  color: #ffffff;
+}
+
+.msg-input {
+  margin-top: 16px;
+  width: 167px;
+}

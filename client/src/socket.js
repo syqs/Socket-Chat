@@ -13,14 +13,12 @@ var userNames = (function () {
 
   // find the lowest unused "guest" name and claim it
   var getGuestName = function () {
-    var name,
-      nextUserId = 1;
-
+    var name;
+    var nextUserId = 1;
     do {
-      name = 'Guest ' + nextUserId;
+      name = 'Guest' + nextUserId;
       nextUserId += 1;
     } while (!claim(name));
-
     return name;
   };
 
@@ -57,6 +55,18 @@ module.exports = function (socket) {
     name: name,
     users: userNames.get()
   });
+  
+  // handle incoming connections from clients
+  
+  // got room name
+  socket.on('room', function(room) {
+      socket.join(room);
+  });
+
+  // got leaveRoom
+  socket.on('leaveRoom', function(room) {
+      socket.leave(room);
+  });
 
   // notify other clients that a new user has joined
   socket.broadcast.emit('user:join', {
@@ -65,29 +75,11 @@ module.exports = function (socket) {
 
   // broadcast a user's message to other users
   socket.on('send:message', function (data) {
-    socket.broadcast.emit('send:message', {
+    console.log("this is data", data)
+    socket.broadcast.to(data.room).emit('send:message', {
       user: name,
       text: data.message
     });
-  });
-
-  // validate a user's name change, and broadcast it on success
-  socket.on('change:name', function (data, fn) {
-    if (userNames.claim(data.name)) {
-      var oldName = name;
-      userNames.free(oldName);
-
-      name = data.name;
-      
-      socket.broadcast.emit('change:name', {
-        oldName: oldName,
-        newName: name
-      });
-
-      fn(true);
-    } else {
-      fn(false);
-    }
   });
 
   // clean up when a user leaves, and broadcast it to other users
