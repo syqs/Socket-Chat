@@ -73,6 +73,14 @@ module.exports = function (socket) {
     name: name
   });
 
+  // broadcast a room name to other clients
+  socket.on('openchat', function (data) {
+    console.log("this is data.room", data.room)
+    socket.broadcast.emit('openchat', {
+      room: data.room
+    });
+  });
+
   // broadcast a user's message to other users
   socket.on('send:message', function (data) {
     console.log("this is data.room", data.room)

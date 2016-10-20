@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('myApp')
-	.controller('MainCtrl', ['$scope', 'socket', function($scope, socket, Users) {
+	.controller('MainCtrl', ['$scope', 'socket', 'Users', function($scope, socket, Users) {
 
 		$scope.welcome = 'Chat with friends';
 		var room = 'General';
 		$scope.message2 = {};
 		$scope.all = {};
+		$scope.all.General = [];
 
 		// Socket listeners
 		socket.on('init', function(data) {
@@ -35,6 +36,13 @@ angular.module('myApp')
 			$scope.users.push(data.name);
 		});
 
+		// Open chat tab 
+		socket.on('openchat', function(data) {
+			if (data.room === $scope.name) {
+				$scope.addTab(data.room)
+			}
+		})
+
 		// add a message to the conversation when a user disconnects
 		socket.on('user:left', function(data) {
 			$scope.all.General.push({
@@ -51,9 +59,79 @@ angular.module('myApp')
 			}
 		});
 
+		// data object for tracking state of rooms
+		$scope.data = {
+			selectedIndex: 0,
+			secondLocked: true,
+			secondLabel: "Item Two",
+			bottom: false
+		};
+
+		$scope.next = function() {
+			$scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2);
+		};
+
+		$scope.previous = function() {
+			$scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
+		};
+
+		// Rooms
+		var rooms = [{
+			title: 'General'
+		}];
+		var selected = null;
+		var previous = null;
+		// var currentRoom = '';
+		$scope.rooms = rooms;
+		$scope.data.selectedIndex = 1;
+
+		$scope.joinRoom = function(room) {
+			socket.emit('room', room)
+			Users.getFriends().then(function(friends) {
+				console.log("these are the friends: ", friends)
+			}).catch(function(err) {
+				console.log("error happened on client: ", err)
+			});
+		}
+
+		// Add a room/tab
+		$scope.addTab = function(title, view) {
+
+			socket.emit('openchat', {
+				room: title
+			})
+
+			var names = rooms.map(function(room){
+				return room.title;
+			})
+
+			if(!names.includes(title)){
+				console.log("room includeds", rooms)
+				socket.emit('room', title)
+				view = view || title + " Content View";
+				if(rooms){
+					rooms.push({
+						title: title,
+						content: view,
+						disabled: false
+					});
+					$scope.data.selectedIndex = rooms.length;
+				}			
+			}else{
+				$scope.data.selectedIndex = names.indexOf(title) + 1
+			}
+		};
+
+		// remove room/tab
+		$scope.removeTab = function(tab) {
+			socket.emit('leaveRoom', tab)
+			var index = rooms.indexOf(tab);
+			rooms.splice(index, 1);
+		};
+
 		$scope.sendMessage = function(roomName) {
 			$scope.all[roomName] = $scope.all[roomName] || [];
-			
+
 			socket.emit('send:message', {
 				message: $scope.message2[roomName],
 				room: roomName
@@ -69,56 +147,5 @@ angular.module('myApp')
 			$scope.message2 = {};
 		};
 
-		// data object for tracking state of rooms
-		$scope.data = {
-			selectedIndex: 0,
-			secondLocked: true,
-			secondLabel: "Item Two",
-			bottom: false
-		};
-		$scope.next = function() {
-			$scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2);
-		};
-		$scope.previous = function() {
-			$scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
-		};
-
-		// Rooms
-		var rooms = [{	title: 'General' }];
-		var selected = null;
-		var previous = null;
-		// var currentRoom = '';
-		$scope.rooms = rooms;
-		$scope.data.selectedIndex = 1;
-
-		$scope.joinRoom = function(room) {
-			socket.emit('room', room)
-			console.log("joinging rooms and firirein friends")
-			Users.getFriends().then(function(friends){
-				console.log("these are the friends: ", friends)
-			}).catch(function(err){
-				console.log("error happened on client: ", err)
-			});
-		}
-
-		// Add a room/tab
-		$scope.addTab = function(title, view) {
-
-			socket.emit('room', title)
-			view = view || title + " Content View";
-			rooms.push({
-				title: title,
-				content: view,
-				disabled: false
-			});
-			$scope.data.selectedIndex = rooms.length ;
-		};
-
-		// remove room/tab
-		$scope.removeTab = function(tab) {
-			socket.emit('leaveRoom', tab)
-			var index = rooms.indexOf(tab);
-			rooms.splice(index, 1);
-		};
 
 	}]);

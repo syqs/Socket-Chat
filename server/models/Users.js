@@ -4,8 +4,6 @@ var usersSchema = new mongoose.Schema({
   name: String,
   friends: Array,
   online: Boolean
-}, {
-  timestamps: true
 });
 
 

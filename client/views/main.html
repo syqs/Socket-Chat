@@ -15,7 +15,6 @@
 		</md-tab-body>
 	</md-tab>
 	<md-tab ng-repeat="tab in rooms track by $index" ng-init="test()" >
-		<!-- use ng init to run a fn -->
 		<md-tab-label >
 		<span class="elTabo" ng-click="joinRoom(tab.title)">{{tab.title}}</span>
 		<md-button ng-click="removeTab( tab )" class="close" aria-label="close" >
