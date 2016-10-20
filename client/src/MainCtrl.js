@@ -93,6 +93,7 @@ angular.module('myApp')
 
 		$scope.joinRoom = function(room) {
 			socket.emit('room', room)
+			console.log("joinging rooms and firirein friends")
 			Users.getFriends().then(function(friends){
 				console.log("these are the friends: ", friends)
 			}).catch(function(err){
@@ -102,6 +103,7 @@ angular.module('myApp')
 
 		// Add a room/tab
 		$scope.addTab = function(title, view) {
+
 			socket.emit('room', title)
 			view = view || title + " Content View";
 			rooms.push({
