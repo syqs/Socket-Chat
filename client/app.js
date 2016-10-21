@@ -6,7 +6,7 @@ angular.module('myApp', [
     'luegg.directives'
   ])
 
-    .config(function($stateProvider, $urlRouterProvider) {
+  .config(function($stateProvider, $urlRouterProvider) {
     
     $urlRouterProvider.otherwise('/');
     

@@ -6,5 +6,4 @@ var usersSchema = new mongoose.Schema({
   online: Boolean
 });
 
-
-var Users = module.exports = mongoose.model('Users', usersSchema);
+var Users = module.exports = mongoose.model('users', usersSchema);

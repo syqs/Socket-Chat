@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('myApp')
-	.controller('MainCtrl', ['$scope', 'socket', 'Users', function($scope, socket, Users) {
+	.controller('MainCtrl', ['$scope','socket','Users', function($scope, socket, Users) {
 
 		$scope.welcome = 'Chat with friends';
-		var room = 'General';
-		$scope.message2 = {};
+		$scope.message = {};
 		$scope.all = {};
 		$scope.all.General = [];
+		var room = 'General';
 
 		// Socket listeners
 		socket.on('init', function(data) {
@@ -22,7 +22,6 @@ angular.module('myApp')
 
 		// Got message
 		socket.on('send:message', function(message) {
-			console.log("message recieved ", message)
 			$scope.all[message.room] = $scope.all[message.room] || [];
 			$scope.all[message.room].push(message);
 		});
@@ -38,12 +37,14 @@ angular.module('myApp')
 
 		// Open chat tab 
 		socket.on('openchat', function(data) {
+
+			// if roomname is same as the username
 			if (data.room === $scope.name) {
 				$scope.addTab(data.room)
 			}
 		})
 
-		// add a message to the conversation when a user disconnects
+		// Add a message to the conversation when a user disconnects
 		socket.on('user:left', function(data) {
 			$scope.all.General.push({
 				user: 'General',
@@ -59,7 +60,7 @@ angular.module('myApp')
 			}
 		});
 
-		// data object for tracking state of rooms
+		// Data object for tracking state of rooms
 		$scope.data = {
 			selectedIndex: 0,
 			secondLocked: true,
@@ -97,18 +98,17 @@ angular.module('myApp')
 		// Add a room/tab
 		$scope.addTab = function(title, view) {
 
-			socket.emit('openchat', {
-				room: title
-			})
-
 			var names = rooms.map(function(room){
 				return room.title;
 			})
 
+			socket.emit('openchat', {
+				room: title
+			})
+
 			if(!names.includes(title)){
-				console.log("room includeds", rooms)
 				socket.emit('room', title)
-				view = view || title + " Content View";
+				view = view || title ;
 				if(rooms){
 					rooms.push({
 						title: title,
@@ -129,23 +129,23 @@ angular.module('myApp')
 			rooms.splice(index, 1);
 		};
 
+		// send msg
 		$scope.sendMessage = function(roomName) {
 			$scope.all[roomName] = $scope.all[roomName] || [];
 
 			socket.emit('send:message', {
-				message: $scope.message2[roomName],
+				message: $scope.message[roomName],
 				room: roomName
 			});
 
 			// add the message to our model locally
 			$scope.all[roomName].push({
 				user: $scope.name,
-				text: $scope.message2[roomName]
+				text: $scope.message[roomName]
 			});
 
 			// clear message box
-			$scope.message2 = {};
+			$scope.message = {};
 		};
-
 
 	}]);

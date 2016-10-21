@@ -7,13 +7,15 @@
 	<md-tab id="tab3">
 
 		<md-tab-label>
-		<span>
-			<md-icon md-svg-icon="person" style="color:white; z-index: 200"></md-icon>
-		</span>Friends list</md-tab-label>
+		<!-- 	<span>
+				<md-icon md-svg-icon="person" style="color:white; z-index: 200"></md-icon>
+			</span> -->
+			Friends list</md-tab-label>
 		<md-tab-body>
 			<p ng-repeat='user in users'> <button class="friendBtn" ng-click="addTab(user)">{{user}}</button></p>
 		</md-tab-body>
 	</md-tab>
+
 	<md-tab ng-repeat="tab in rooms track by $index" ng-init="test()" >
 		<md-tab-label >
 		<span class="elTabo" ng-click="joinRoom(tab.title)">{{tab.title}}</span>
@@ -22,31 +24,33 @@
 		</md-button>
 		</md-tab-label>
 	<md-tab-body>
+
 	<div id="chatBox" scroll-glue>
 		<p ng-repeat='message in all[tab.title]' ng-class='{alert: message.user == "chatroom"}'>{{message.user}}: {{message.text}}</p>
 	</div>
+
 	<div class="chatControls">
 		<form id="bottom" ng-submit='sendMessage(tab.title)'>
-			<input class="msg-input" type="input" name="msg2" ng-model='message2[tab.title]'/>
+			<input class="msg-input" type="input" name="msg2" ng-model='message[tab.title]'/>
 			<button class="sendMsgBtn" type="subimt" value="Send">Send</button>
 		</form>
 	</div>
+
 	</md-tab-body>
 	</md-tab>
 	</md-tabs>
 	</md-content>
-	<form ng-submit="addTab(tTitle,tContent)" layout="column" class="md-padding" style="padding-top: 0;">
+
+	<form ng-submit="addTab(roomName,tContent)" layout="column" class="md-padding" style="padding-top: 0;">
 		<div layout="row" layout-sm="column">
 			<md-input-container>
 			<label for="label">Label</label>
-			<input type="text" id="label" ng-model="tTitle">
+			<input type="text" id="label" ng-model="roomName">
 			</md-input-container>
-			<md-button class="add-tab md-primary md-raised" ng-disabled="!tTitle" type="submit" style="margin-right: 0;">Add Room</md-button>
+			<md-button class="add-tab md-primary md-raised" ng-disabled="!roomName" type="submit" style="margin-right: 0;">Add Room</md-button>
 		</div>
 	</form>
-</div>
-</div>
-<div>
 
 </div>
-<div ui-view></div>
+
+<!-- <div ui-view></div> -->

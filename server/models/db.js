@@ -2,7 +2,7 @@ var mongoose = require( 'mongoose' );
 mongoose.Promise = require( 'bluebird' );
 
 if(!process.env.URI){
-  var uri = 'mongodb://localhost/myapp';
+  var uri = 'mongodb://localhost/myApp';
 } else {
   var uri = process.env.URI;
 }
@@ -35,3 +35,5 @@ process.on('SIGINT', function(){
 
 // SCHEMAS
 require('./Users');
+
+

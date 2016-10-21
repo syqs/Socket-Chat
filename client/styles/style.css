@@ -29,8 +29,8 @@ h1{
 
 .md-padding{
   background: transparent;
-
 }
+
 button.close{
   min-height: 10px;
   min-width: 10px;
@@ -44,6 +44,7 @@ button.close{
 md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
   min-height: 420px;
 }
+
 .jumbotron{
 	background-color: #dcdcdc;
 	text-align: center;

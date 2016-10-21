@@ -3,9 +3,8 @@
 
   angular
     .module('myApp')
-    /* Services */
-
     .factory('socket', function($rootScope) {
+      
       var socket = io.connect();
       return {
         on: function(eventName, callback) {
@@ -16,6 +15,7 @@
             });
           });
         },
+
         emit: function(eventName, data, callback) {
           socket.emit(eventName, data, function() {
             var args = arguments;
