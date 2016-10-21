@@ -11,11 +11,11 @@ describe("The Server", function() {
 
     // Mocha will wait for returned promises to complete
     return request(app)
-      .get('/api/tags-example')
+      .get('/api/friends')
       .expect(200)
       .expect(function(response) {
         console.log("response: ", response.body)
-        expect(response.body).to.include('node', 'angular')
+        expect(response.body).to.include('user1')
       })
   })
 })
