@@ -7,6 +7,8 @@ $ git clone https://github.com/syqs/iss-tracker.git myApp
 $ cd myApp
 $ npm install
 $ bower install
+// start mongo
+$ mongod
 $ npm start
 ```
 Now visit [localhost:4000](http://localhost:4000/)
