@@ -69,8 +69,6 @@ routes.post('/api/friends/remove', function(req, res) {
 
   var name = req.body.name;
   var friend = req.body.friend;
-
-  
 });
 
 

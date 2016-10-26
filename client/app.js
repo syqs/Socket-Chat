@@ -6,7 +6,12 @@ angular.module('myApp', [
     'luegg.directives'
   ])
 
-  .config(function($stateProvider, $urlRouterProvider) {
+  .config(function($stateProvider, $urlRouterProvider, $mdThemingProvider) {
+
+    $mdThemingProvider.theme('default')
+    .primaryPalette('green')
+    .accentPalette('orange')
+    .dark();
     
     $urlRouterProvider.otherwise('/');
     
