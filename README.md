@@ -3,7 +3,7 @@
 ## Getting Started
 
 ```
-$ git clone https://github.com/syqs/iss-tracker.git myApp
+$ git clone https://github.com/syqs/Socket-Chat.git
 $ cd myApp
 $ npm install
 $ bower install
